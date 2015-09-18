@@ -11,11 +11,11 @@
                 // routes
                 $routeProvider
                     .when('/', {
-                        templateUrl: 'views/home.html',
+                        templateUrl: 'pages/home.html',
                         controller: 'MainController'
                     })
                     .when('/about', {
-                        templateUrl: 'views/about.html'
+                        templateUrl: 'pages/about.html'
                     })
                     .otherwise({
                         redirectTo: '/',
