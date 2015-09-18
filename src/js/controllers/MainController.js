@@ -1,8 +1,10 @@
-angular.module('cortejando')
+'use strict';
 
-    .controller('MainController', [
-        '$scope',
-        function ($scope) {
-            $scope.home = 'This is the homepage';
-        }
-    ]);
+CortejandoApp.controller('MainController', [
+    '$scope',
+
+    function ($scope) {
+        $scope.home = 'Text coming from MainController';
+    }
+
+]);

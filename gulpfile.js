@@ -56,7 +56,7 @@ gulp.task('scripts', function() {
         bowerPath + 'angular/angular.min.js',
         bowerPath + 'angular-animate/angular-animate.min.js',
         bowerPath + 'angular-route/angular-route.min.js',
-        bowerPath + 'angular-route/angular-route.min.js',
+        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js',
         bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
     ])
         .pipe(concat('vendor.js'))

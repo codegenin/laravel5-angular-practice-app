@@ -16,6 +16,7 @@
     "angular": "~1.4.5",
     "angular-animate": "~1.4.5",
     "angular-route": "~1.4.5",
+    "angular-ui-router": "~0.2.15",
     "animate.css": "~3.4.0",
     "bootstrap": "~3.3.5",
     "bootstrap-sass": "bootstrap-sass-official#~3.3.5",
