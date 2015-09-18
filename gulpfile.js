@@ -3,6 +3,8 @@ var gulp    = require('gulp'),
     connect = require('gulp-connect'),
     concat  = require('gulp-concat'),
     sass    = require('gulp-sass'),
+    uglify  = require('gulp-uglify'),
+    rename  = require('gulp-rename'),
     clean   = require('gulp-clean');
 
 // Source and distribution folder
@@ -49,18 +51,32 @@ gulp.task('sass', ['fonts'], function () {
         .pipe(gulp.dest(css.out));
 });
 
-// Concatenates vendor scripts
-gulp.task('scripts', function() {
+// Concatenates and minify vendor scripts
+gulp.task('vendor-scripts', function() {
     return gulp.src([
         bowerPath + 'jquery/dist/jquery.min.js',
-        bowerPath + 'angular/angular.min.js',
-        bowerPath + 'angular-animate/angular-animate.min.js',
-        bowerPath + 'angular-route/angular-route.min.js',
-        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js',
         bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
     ])
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(dest + 'js/vendor/'));
+        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(rename('vendor.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dest + 'js/vendor/'));;
+});
+
+// Concatenates and minify angular scripts
+gulp.task('angular-scripts', function() {
+    return gulp.src([
+        bowerPath + 'angular/angular.min.js',
+        bowerPath + 'angular-animate/angular-animate.min.js',
+        bowerPath + 'angular-route/angular-route.min.js',
+        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js'
+    ])
+        .pipe(concat('angular.js'))
+        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(rename('angular.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dest + 'js/vendor/'));;;
 });
 
 // Copy all html files to dist
@@ -97,7 +113,8 @@ gulp.task('deploy', function () {
 // Default task
 gulp.task('default', [
     'sass',
-    'scripts',
+    'vendor-scripts',
+    'angular-scripts',
     'copy-html-files',
     'copy-js-files',
     'copy-images-files',
