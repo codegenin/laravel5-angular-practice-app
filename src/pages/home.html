@@ -1,1 +1,66 @@
-<h1>{{home}}</h1>
+<div class="col-md-offset-2 col-md-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">Become A Member! It's FREE!</div>
+        <div class="panel-body">
+            <form accept-charset="UTF-8" action="" class="form-horizontal"
+                  enctype="multipart/form-data" id="form_new_user" method="post">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="user_name">
+                        <abbr title="required">*</abbr> Name</label>
+                    <div class="col-sm-9">
+                        <input class="required form-control" id="user_name"
+                               name="user[name]" type="text">
+                        <p class="help-block">At least 6 characters long</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="user_description">
+                        <abbr title="required">*</abbr> Description</label>
+                    <div class="col-sm-9">
+                        <textarea name="user[description]" id="user_description"
+                                  style="width:100%" rows="10"></textarea>
+                        <p class="help-block">Maximum 500 characters</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="user_dob">
+                        <abbr title="required">*</abbr> Date Of Birth</label>
+                    <div class="col-sm-9">
+                        <input class="required form-control" id="user_dob"
+                               name="user[dob]" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="user_phone">
+                        Phone Number</label>
+                    <div class="col-sm-9">
+                        <input class="required form-control" id="user_phone"
+                               name="user[phone]" type="text">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">
+                        <abbr title="required">*</abbr> Gender</label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline">
+                            <input type="radio" name="user[gender]" id="user_gender_male" value="male" >
+                            Male
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="user[gender]" id="user_gender_female" value="female">
+                            Winter
+                        </label>
+                    </div>
+                </div>
+
+                <input class="btn btn-default" name="register" type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+</div>

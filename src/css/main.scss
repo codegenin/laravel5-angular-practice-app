@@ -7,5 +7,9 @@ $font-family-base: 'Raleway', sans-serif;
 @import "font-awesome";
 
 body {
-  background: #ffffff;
+  padding-top: 0px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
 }
