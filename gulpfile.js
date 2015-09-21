@@ -23,16 +23,16 @@ var fonts = {
 
 // CSS source file: .scss files
 var css = {
-    in: source + 'css/main.scss',
+    in: source + 'scss/main.scss',
     out: dest + 'css/',
-    watch: source + 'css/**/*',
+    watch: source + 'scss/**/*',
     sassOpts: {
         outputStyle: 'nested',
         precison: 3,
         errLogToConsole: true,
         includePaths: [
             bowerPath + 'bootstrap-sass/assets/stylesheets',
-            bowerPath + 'font-awesome/scss',
+            bowerPath + 'font-awesome/css',
         ]
     }
 };
