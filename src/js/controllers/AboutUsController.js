@@ -1,9 +1,7 @@
-'use strict';
+angular.module('cortejando').
 
-CortejandoApp.controller('AboutUsController', [
-   '$scope',
-
-    function($scope) {
+    controller('AboutUsController', ['$scope', function($scope) {
         $scope.about = 'Text coming from AboutUsController';
     }
+
 ]);

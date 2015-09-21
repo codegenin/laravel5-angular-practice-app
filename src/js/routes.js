@@ -1,8 +1,6 @@
-'use strict';
+angular.module('cortejando').
 
-CortejandoApp
-
-    .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
         $urlRouterProvider.otherwise('/');
 

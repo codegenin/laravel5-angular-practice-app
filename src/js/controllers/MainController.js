@@ -1,10 +1,15 @@
-'use strict';
+angular.module('cortejando').
 
-CortejandoApp.controller('MainController', [
-    '$scope',
+    controller('MainController', function($scope) {
 
-    function ($scope) {
-        $scope.home = 'Text coming from MainController';
-    }
+        // Current Date
+        $scope.date = new Date();
 
-]);
+        $scope.save = function() {
+            alert('Data has been save!');
+        };
+
+        $scope.reset = function() {
+            $scope.user = { name: '', description: '' };
+        }
+    });

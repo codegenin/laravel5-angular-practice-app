@@ -13,3 +13,12 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+// Angular validation classes
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+  border: 1px solid red;
+}
+
+textarea.ng-touched.ng-valid {
+  border: 1px solid #3c763d;
+}
