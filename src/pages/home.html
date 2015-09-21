@@ -51,7 +51,7 @@
                                ng-model="register.dob" min="1960-01-01"
                                max="{{date | date:'yyyy-MM-dd'}}"
                                ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
-                               name="dob" type="text"
+                               name="dob" type="date"
                                placeholder="yyyy-mm-dd" required>
                         <p class="help-block" ng-show="registerForm.dob.$invalid">
                             Please enter the correct date yyyy-mm-dd format.</p>
