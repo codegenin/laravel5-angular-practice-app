@@ -11,6 +11,11 @@ angular.module('cortejando').
                 templateUrl: 'pages/home.html',
                 controller: 'MainController'
             })
+            .state('register', {
+                url: '/register',
+                templateUrl: 'pages/user/register.html',
+                controller: 'UserRegisterController'
+            })
             .state('about', {
                 url: '/about',
                 templateUrl: 'pages/about.html',

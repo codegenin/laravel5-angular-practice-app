@@ -1,4 +1,83 @@
-<h1>Home Page</h1>
+<form id="registerForm" name="registerForm" novalidate>
+
+    <!-- Error Blocks -->
+    <p class="help-block" ng-show="registerForm.$dirty && registerForm.name.$invalid">
+        Your name should be between 6 to 50 characters.
+    </p>
+    <p class="help-block" ng-show="registerForm.$dirty && registerForm.description.$invalid">
+        Maximum 500 characters is allowed.
+    </p>
+    <p class="help-block" ng-show="registerForm.$dirty && registerForm.dob.$invalid">
+        Please enter your date of birth.
+    </p>
+    <p class="help-block" ng-show="registerForm.$dirty && registerForm.phone.$invalid">
+        Please phone number in +###-####-### format.
+    </p>
+    <p class="help-block" ng-show="registerForm.$dirty && registerForm.gender.$invalid">
+        Please select your gender.
+    </p>
+
+    <div class="list">
+        <!-- Name -->
+        <label for="user_name" class="item item-input"
+               ng-class="{'has-error': registerForm.name.$touched && registerForm.name.$invalid}">
+            <input name="name" id="user_name" type="text"
+                   ng-model="register.name"
+                   ng-minlength="6" ng-maxlength="50"
+                   placeholder="Your name" required>
+        </label>
+
+        <!-- Description -->
+        <label for="user_description" class="item item-input"
+               ng-class="{'has-error': registerForm.description.$touched && registerForm.description.$invalid}">
+            <textarea name="description" id="user_description"
+                      ng-model="register.description"
+                      rows="10" ng-maxlength="500"
+                      placeholder="Your description"
+                      ng-maxlength="500" required></textarea>
+        </label>
+
+        <!-- Date Of Birht -->
+        <label for="user_dob" class="item item-input"
+               ng-class="{'has-error': registerForm.dob.$touched && registerForm.dob.$invalid}">
+            <input name="dob" type="date" id="user_dob" ng-model="register.dob" min="1960-01-01"
+                   max="{{date | date:'yyyy-MM-dd'}}"
+                   ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
+                   placeholder="Date Of Birth - yyyy-mm-dd" required>
+        </label>
+
+        <!-- Phone Number -->
+        <label for="user_phone" class="item item-input">
+            <input type="text" id="user_phone" ng-model="register.phone" name="phone"
+                   ng-pattern="/^[0-9 + -]+$/" placeholder="Phone Number">
+        </label>
+
+        <!-- Gender -->
+        <label class="item item-radio">
+            <input type="radio" ng-model="register.gender" name="gender"
+                   value="male" ng-required="!register.gender">
+            <div class="item-content">
+                Male
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+        </label>
+        <label class="item item-radio">
+            <input type="radio" ng-model="register.gender" name="gender"
+                   value="female" ng-required="!register.gender">
+            <div class="item-content">
+                Female
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+        </label>
+
+        <!-- Submit Button-->
+        <button class="button button-block button-positive"
+               ng-disabled="registerForm.$invalid" ng-click="save()">
+            Register
+            </button>
+    </div>
+</form>
+
 <!--
 <div class="col-md-offset-2 col-md-8">
     <div class="panel panel-default">
@@ -17,7 +96,7 @@
                     <div class="col-sm-9">
                         <input class="required form-control" id="user_name"
                                ng-model="register.name" name="name" type="text"
-                                ng-minlength="6" ng-maxlength="50" required>
+                               ng-minlength="6" ng-maxlength="50" required>
                         <p class="help-block" ng-show="registerForm.$dirty && registerForm.name.$invalid">
                             Please enter between 6 to 50 characters.</p>
                     </div>

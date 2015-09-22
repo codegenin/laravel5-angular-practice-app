@@ -16,7 +16,8 @@ var source      = 'src/',
 var fonts = {
     in: [
         bowerPath + 'bootstrap-sass/assets/fonts/**/*',
-        bowerPath + 'font-awesome/fonts/*'
+        bowerPath + 'font-awesome/fonts/*',
+        source + 'lib/ionic/fonts/*',
     ],
     out: dest + 'fonts/'
 };
@@ -31,6 +32,8 @@ var css = {
         precison: 3,
         errLogToConsole: true,
         includePaths: [
+            source + 'lib/ionic/css',
+            source + 'lib/ionic/scss',
             bowerPath + 'bootstrap-sass/assets/stylesheets',
             bowerPath + 'font-awesome/css',
         ]
@@ -55,6 +58,7 @@ gulp.task('sass', ['fonts'], function () {
 gulp.task('vendor-scripts', function() {
     return gulp.src([
         bowerPath + 'jquery/dist/jquery.min.js',
+        source + 'lib/ionic/js/ionic.min.js',
         bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
     ])
         .pipe(concat('vendor.js'))
