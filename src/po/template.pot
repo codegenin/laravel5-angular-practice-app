@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: partials\nav.html:15
+msgid "About"
+msgstr ""
+
+#: pages\about.html:1
+msgid "About Page"
+msgstr ""
+
+#: pages\user\register.html:51
+msgid "Date Of Birth - yyyy-mm-dd"
+msgstr ""
+
+#: pages\user\register.html:72
+msgid "Female"
+msgstr ""
+
+#: partials\nav.html:14
+msgid "Home"
+msgstr ""
+
+#: pages\home.html:1
+msgid "Home Page"
+msgstr ""
+
+#: pages\user\register.html:64
+msgid "Male"
+msgstr ""
+
+#: pages\user\register.html:8
+msgid "Maximum 500 characters is allowed."
+msgstr ""
+
+#: pages\user\register.html:57
+msgid "Phone Number"
+msgstr ""
+
+#: pages\user\register.html:12
+msgid "Please enter your date of birth."
+msgstr ""
+
+#: pages\user\register.html:16
+msgid "Please phone number in +###-####-### format."
+msgstr ""
+
+#: pages\user\register.html:20
+msgid "Please select your gender."
+msgstr ""
+
+#: pages\user\register.html:79
+#: partials\nav.html:16
+msgid "Register"
+msgstr ""
+
+#: pages\user\register.html:41
+msgid "Your description"
+msgstr ""
+
+#: pages\user\register.html:32
+msgid "Your name"
+msgstr ""
+
+#: pages\user\register.html:4
+msgid "Your name should be between 6 to 50 characters."
+msgstr ""

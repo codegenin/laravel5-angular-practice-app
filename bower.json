@@ -15,6 +15,7 @@
   "dependencies": {
     "angular": "~1.4.5",
     "angular-animate": "~1.4.5",
+    "angular-gettext": "~2.1.0",
     "angular-route": "~1.4.5",
     "angular-ui-router": "~0.2.15",
     "animate.css": "~3.4.0",

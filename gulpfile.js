@@ -5,7 +5,8 @@ var gulp    = require('gulp'),
     sass    = require('gulp-sass'),
     uglify  = require('gulp-uglify'),
     rename  = require('gulp-rename'),
-    clean   = require('gulp-clean');
+    clean   = require('gulp-clean'),
+    gettext = require('gulp-angular-gettext');;
 
 // Source and distribution folder
 var source      = 'src/',
@@ -74,7 +75,8 @@ gulp.task('angular-scripts', function() {
         bowerPath + 'angular/angular.min.js',
         bowerPath + 'angular-animate/angular-animate.min.js',
         bowerPath + 'angular-route/angular-route.min.js',
-        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js'
+        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js',
+        bowerPath + 'angular-gettext/dist/angular-gettext.js'
     ])
         .pipe(concat('angular.js'))
         .pipe(gulp.dest(dest + 'js/vendor/'))
@@ -106,6 +108,24 @@ gulp.task('clean', function() {
     gulp.src('./dist/*')
         .pipe(clean({force: true}));
 });
+
+// Pot file
+gulp.task('pot', function () {
+    return gulp.src([source +'/**/*.html', source + '/js/**/*.js'])
+        .pipe(gettext.extract('template.pot', {
+            // options to pass to angular-gettext-tools...
+        }))
+        .pipe(gulp.dest(source + 'po/'));
+});
+
+gulp.task('translations', function () {
+    return gulp.src( source + '/po/**/*.po')
+        .pipe(gettext.compile({
+            // options to pass to angular-gettext-tools...
+        }))
+        .pipe(gulp.dest(dest + '/translations/'));
+});
+
 // Run local server
 gulp.task('deploy', function () {
     connect.server({
@@ -122,6 +142,7 @@ gulp.task('default', [
     'copy-html-files',
     'copy-js-files',
     'copy-images-files',
+    'translations',
     'deploy',
 ], function () {
     gulp.watch(css.watch, ['sass']);

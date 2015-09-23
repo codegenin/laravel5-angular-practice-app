@@ -1,19 +1,24 @@
 <form id="registerForm" name="registerForm" novalidate>
 
     <!-- Error Blocks -->
-    <p class="help-block" ng-show="registerForm.$dirty && registerForm.name.$invalid">
+    <p class="help-block"
+       ng-show="registerForm.$dirty && registerForm.name.$invalid" translate>
         Your name should be between 6 to 50 characters.
     </p>
-    <p class="help-block" ng-show="registerForm.$dirty && registerForm.description.$invalid">
+    <p class="help-block"
+       ng-show="registerForm.$dirty && registerForm.description.$invalid" translate>
         Maximum 500 characters is allowed.
     </p>
-    <p class="help-block" ng-show="registerForm.$dirty && registerForm.dob.$invalid">
+    <p class="help-block"
+       ng-show="registerForm.$dirty && registerForm.dob.$invalid" translate>
         Please enter your date of birth.
     </p>
-    <p class="help-block" ng-show="registerForm.$dirty && registerForm.phone.$invalid">
+    <p class="help-block"
+       ng-show="registerForm.$dirty && registerForm.phone.$invalid" translate>
         Please phone number in +###-####-### format.
     </p>
-    <p class="help-block" ng-show="registerForm.$dirty && registerForm.gender.$invalid">
+    <p class="help-block"
+       ng-show="registerForm.$dirty && registerForm.gender.$invalid" translate>
         Please select your gender.
     </p>
 
@@ -24,7 +29,7 @@
             <input name="name" id="user_name" type="text"
                    ng-model="register.name"
                    ng-minlength="6" ng-maxlength="50"
-                   placeholder="Your name" required>
+                   placeholder="{{'Your name' | translate}}" required>
         </label>
 
         <!-- Description -->
@@ -33,7 +38,7 @@
             <textarea name="description" id="user_description"
                       ng-model="register.description"
                       rows="10" ng-maxlength="500"
-                      placeholder="Your description"
+                      placeholder="{{'Your description'|translate}}"
                       ng-maxlength="500" required></textarea>
         </label>
 
@@ -43,20 +48,20 @@
             <input name="dob" type="date" id="user_dob" ng-model="register.dob" min="1960-01-01"
                    max="{{date | date:'yyyy-MM-dd'}}"
                    ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
-                   placeholder="Date Of Birth - yyyy-mm-dd" required>
+                   placeholder="{{'Date Of Birth - yyyy-mm-dd'|translate}}" required>
         </label>
 
         <!-- Phone Number -->
         <label for="user_phone" class="item item-input">
             <input type="text" id="user_phone" ng-model="register.phone" name="phone"
-                   ng-pattern="/^[0-9 + -]+$/" placeholder="Phone Number">
+                   ng-pattern="/^[0-9 + -]+$/" placeholder="{{'Phone Number'|translate}}">
         </label>
 
         <!-- Gender -->
         <label class="item item-radio">
             <input type="radio" ng-model="register.gender" name="gender"
                    value="male" ng-required="!register.gender">
-            <div class="item-content">
+            <div class="item-content" translate>
                 Male
             </div>
             <i class="radio-icon ion-checkmark"></i>
@@ -64,7 +69,7 @@
         <label class="item item-radio">
             <input type="radio" ng-model="register.gender" name="gender"
                    value="female" ng-required="!register.gender">
-            <div class="item-content">
+            <div class="item-content" translate>
                 Female
             </div>
             <i class="radio-icon ion-checkmark"></i>
@@ -72,7 +77,7 @@
 
         <!-- Submit Button-->
         <button class="button button-block button-positive"
-               ng-disabled="registerForm.$invalid" ng-click="save()">
+               ng-disabled="registerForm.$invalid" ng-click="save()" translate>
             Register
             </button>
     </div>

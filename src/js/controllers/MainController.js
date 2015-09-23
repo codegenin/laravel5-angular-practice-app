@@ -1,6 +1,12 @@
 angular.module('cortejando').
 
-    controller('MainController', function($scope) {
+    controller('MainController', function($scope, gettextCatalog) {
+
+        gettextCatalog.setcurrentLanguage = 'nl_NL';
+
+        $scope.ChangeLanguage = function (language) {
+            gettextCatalog.setCurrentLanguage(language);
+        }
 
         // Current Date
         $scope.date = new Date();
