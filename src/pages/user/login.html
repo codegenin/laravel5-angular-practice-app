@@ -1,0 +1,16 @@
+<form method="post" id="loginFomr" name="loginForm">
+    <!-- Username -->
+    <label for="username" class="item item-input">
+        <input type="text" id="username" name="username"
+                ng-model="login.username" placeholder="Username">
+    </label>
+    <!-- Password -->
+    <label for="password" class="item item-input">
+        <input type="text" id="password" name="password"
+                ng-model="login.password" placeholder="Password">
+    </label>
+    <button class="button button-block button-positive"
+            ng-click="signin()">
+        Register
+    </button>
+</form>

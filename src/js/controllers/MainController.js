@@ -18,4 +18,5 @@ angular.module('cortejando').
         $scope.reset = function() {
             $scope.user = { name: '', description: '' };
         }
+
     });

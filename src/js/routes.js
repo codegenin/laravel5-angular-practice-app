@@ -1,6 +1,7 @@
-angular.module('cortejando').
+angular.module('cortejando')
 
-    config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config( function( $stateProvider, $urlRouterProvider, $locationProvider ,
+        $httpProvider) {
 
         $urlRouterProvider.otherwise('/');
 
@@ -9,12 +10,7 @@ angular.module('cortejando').
             .state('home', {
                 url: '/',
                 templateUrl: 'pages/home.html',
-                controller: 'MainController'
-            })
-            .state('register', {
-                url: '/register',
-                templateUrl: 'pages/user/register.html',
-                controller: 'UserRegisterController'
+                controller: 'MainController',
             })
             .state('about', {
                 url: '/about',
@@ -22,5 +18,31 @@ angular.module('cortejando').
                 controller: 'AboutUsController'
             })
 
+        /**
+         * User Routes
+         */
+            .state('register', {
+                url: '/register',
+                templateUrl: 'pages/user/register.html',
+                controller: 'RegisterController'
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'pages/user/login.html',
+                controller: 'AuthController'
+            })
+            .state('logout', {
+                url: '/logout',
+                controller: 'LogoutController'
+            })
+            .state('profile', {
+                url: '/profile',
+                templateUrl: 'pages/user/profile.html',
+                controller: 'ProfileController'
+            })
+
         $locationProvider.html5Mode(true);
+
+        // Load Auth service as interceptor
+        $httpProvider.interceptors.push('AuthInterceptor');
     });
