@@ -1,52 +1,132 @@
-// gulp
-var gulp = require('gulp');
+// Gulp and plugins
+var gulp    = require('gulp'),
+    connect = require('gulp-connect'),
+    concat  = require('gulp-concat'),
+    sass    = require('gulp-sass'),
+    uglify  = require('gulp-uglify'),
+    rename  = require('gulp-rename'),
+    clean   = require('gulp-clean'),
+    gettext = require('gulp-angular-gettext');;
 
-// plugins
-var connect = require('gulp-connect');
-var jshint = require('gulp-jshint');
-var uglify = require('gulp-uglify');
-var minifyCSS = require('gulp-minify-css');
-var clean = require('gulp-clean');
+// Source and distribution folder
+var source      = 'src/',
+    dest        = 'dist/',
+    bowerPath   = 'bower_components/';
 
-// tasks
-gulp.task('lint', function() {
-    gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(jshint.reporter('fail'));
+// Fonts
+var fonts = {
+    in: [
+        bowerPath + 'bootstrap-sass/assets/fonts/**/*',
+        bowerPath + 'font-awesome/fonts/*',
+        source + 'lib/ionic/fonts/*',
+    ],
+    out: dest + 'fonts/'
+};
+
+// CSS source file: .scss files
+var css = {
+    in: source + 'scss/main.scss',
+    out: dest + 'css/',
+    watch: source + 'scss/**/*',
+    sassOpts: {
+        outputStyle: 'nested',
+        precison: 3,
+        errLogToConsole: true,
+        includePaths: [
+            source + 'lib/ionic/css',
+            source + 'lib/ionic/scss',
+            bowerPath + 'bootstrap-sass/assets/stylesheets',
+            bowerPath + 'font-awesome/css',
+        ]
+    }
+};
+
+// Copy bootstrap required fonts to dist
+gulp.task('fonts', function () {
+    return gulp
+        .src(fonts.in)
+        .pipe(gulp.dest(fonts.out));
 });
+
+// Compile scss
+gulp.task('sass', ['fonts'], function () {
+    return gulp.src(css.in)
+        .pipe(sass(css.sassOpts))
+        .pipe(gulp.dest(css.out));
+});
+
+// Concatenates and minify vendor scripts
+gulp.task('vendor-scripts', function() {
+    return gulp.src([
+        bowerPath + 'jquery/dist/jquery.min.js',
+        source + 'lib/ionic/js/ionic.min.js',
+        bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
+    ])
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(rename('vendor.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dest + 'js/vendor/'));;
+});
+
+// Concatenates and minify angular scripts
+gulp.task('angular-scripts', function() {
+    return gulp.src([
+        bowerPath + 'angular/angular.min.js',
+        bowerPath + 'angular-animate/angular-animate.min.js',
+        bowerPath + 'angular-route/angular-route.min.js',
+        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js',
+        bowerPath + 'angular-gettext/dist/angular-gettext.js'
+    ])
+        .pipe(concat('angular.js'))
+        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(rename('angular.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(dest + 'js/vendor/'));;;
+});
+
+// Copy all html files to dist
+gulp.task('copy-html-files', function () {
+    return gulp.src(source + '**/*.html')
+        .pipe(gulp.dest(dest));
+});
+
+// Copy all image files to dist
+gulp.task('copy-images-files', function () {
+    return gulp.src(source + '**/*.{jpg,jpeg,png,gif}')
+        .pipe(gulp.dest(dest));
+});
+
+// Copy all js files to dist
+gulp.task('copy-js-files', function () {
+    return gulp.src(source + '**/*.js')
+        .pipe(gulp.dest(dest));
+});
+
+// Clean all files in dist
 gulp.task('clean', function() {
     gulp.src('./dist/*')
         .pipe(clean({force: true}));
 });
-gulp.task('minify-css', function() {
-    var opts = {comments:true,spare:true};
-    gulp.src(['./app/**/*.css', '!./app/bower_components/**'])
-        .pipe(minifyCSS(opts))
-        .pipe(gulp.dest('./dist/'))
-});
-gulp.task('minify-js', function() {
-    gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
-        .pipe(uglify({
-            // inSourceMap:
-            // outSourceMap: "app.js.map"
+
+// Pot file
+gulp.task('pot', function () {
+    return gulp.src([source +'/**/*.html', source + '/js/**/*.js'])
+        .pipe(gettext.extract('template.pot', {
+            // options to pass to angular-gettext-tools...
         }))
-        .pipe(gulp.dest('./dist/'))
+        .pipe(gulp.dest(source + 'po/'));
 });
-gulp.task('copy-bower-components', function () {
-    gulp.src('./app/bower_components/**')
-        .pipe(gulp.dest('dist/bower_components'));
+
+gulp.task('translations', function () {
+    return gulp.src( source + '/po/**/*.po')
+        .pipe(gettext.compile({
+            // options to pass to angular-gettext-tools...
+        }))
+        .pipe(gulp.dest(dest + '/translations/'));
 });
-gulp.task('copy-html-files', function () {
-    gulp.src('./app/**/*.html')
-        .pipe(gulp.dest('dist/'));
-});
-gulp.task('serve', function () {
-    connect.server({
-        root: 'app/',
-        port: 8000
-    });
-});
+
+// Run local server
 gulp.task('deploy', function () {
     connect.server({
         root: 'dist/',
@@ -54,12 +134,19 @@ gulp.task('deploy', function () {
     });
 });
 
-
-// default task
-gulp.task('default',
-    ['lint', 'serve']
-);
-// build task
-gulp.task('build',
-    ['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'deploy']
-);
+// Default task
+gulp.task('default', [
+    'sass',
+    'vendor-scripts',
+    'angular-scripts',
+    'copy-html-files',
+    'copy-js-files',
+    'copy-images-files',
+    'translations',
+    'deploy',
+], function () {
+    gulp.watch(css.watch, ['sass']);
+    gulp.watch(source + '**/*.html', ['copy-html-files']);
+    gulp.watch(source + '**/*.js', ['copy-js-files']);
+    gulp.watch(source + '**/*.{jpg,jpeg,png,gif}', ['copy-images-files']);
+});
