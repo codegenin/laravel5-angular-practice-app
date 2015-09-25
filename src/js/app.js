@@ -6,6 +6,8 @@ angular.module("cortejando", [
     "ui.router",
     "ngAnimate",
     "gettext"
-]);
+])
+
+
 
 

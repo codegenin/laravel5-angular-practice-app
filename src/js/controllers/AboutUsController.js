@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('cortejando').
 
     controller('AboutUsController', ['$scope', function($scope) {

@@ -1,6 +1,8 @@
-angular.module('cortejando').
+'use strict';
 
-    controller('MainController', function($scope, gettextCatalog) {
+angular.module('cortejando')
+
+    .controller('MainController', function($scope, gettextCatalog, AuthTokenService) {
 
         gettextCatalog.setcurrentLanguage = 'nl_NL';
 
