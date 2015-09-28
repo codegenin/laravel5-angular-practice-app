@@ -9,8 +9,8 @@ var gulp    = require('gulp'),
     gettext = require('gulp-angular-gettext');;
 
 // Source and distribution folder
-var source      = 'src/',
-    dest        = 'dist/',
+var source      = 'resources/',
+    dest        = 'public/',
     bowerPath   = 'bower_components/';
 
 // Fonts
@@ -25,9 +25,9 @@ var fonts = {
 
 // CSS source file: .scss files
 var css = {
-    in: source + 'scss/main.scss',
-    out: dest + 'css/',
-    watch: source + 'scss/**/*',
+    in: source + 'assets/sass/app.scss',
+    out: dest + 'assets/css/',
+    watch: source + 'assets/sass/**/*',
     sassOpts: {
         outputStyle: 'nested',
         precison: 3,
@@ -63,10 +63,10 @@ gulp.task('vendor-scripts', function() {
         bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
     ])
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(gulp.dest(dest + 'assets/js/vendor/'))
         .pipe(rename('vendor.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(dest + 'js/vendor/'));;
+        .pipe(gulp.dest(dest + 'assets/js/vendor/'));;
 });
 
 // Concatenates and minify angular scripts
@@ -79,10 +79,10 @@ gulp.task('angular-scripts', function() {
         bowerPath + 'angular-gettext/dist/angular-gettext.js'
     ])
         .pipe(concat('angular.js'))
-        .pipe(gulp.dest(dest + 'js/vendor/'))
+        .pipe(gulp.dest(dest + 'assets/js/vendor/'))
         .pipe(rename('angular.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(dest + 'js/vendor/'));;;
+        .pipe(gulp.dest(dest + 'assets/js/vendor/'));;;
 });
 
 // Copy all html files to dist
@@ -104,10 +104,10 @@ gulp.task('copy-js-files', function () {
 });
 
 // Clean all files in dist
-gulp.task('clean', function() {
-    gulp.src('./dist/*')
+/*gulp.task('clean', function() {
+    gulp.src('./publi/!*')
         .pipe(clean({force: true}));
-});
+});*/
 
 // Pot file
 gulp.task('pot', function () {
@@ -119,7 +119,7 @@ gulp.task('pot', function () {
 });
 
 gulp.task('translations', function () {
-    return gulp.src( source + '/po/**/*.po')
+    return gulp.src( source + 'lang/po/**/*.po')
         .pipe(gettext.compile({
             // options to pass to angular-gettext-tools...
         }))
@@ -129,8 +129,8 @@ gulp.task('translations', function () {
 // Run local server
 gulp.task('deploy', function () {
     connect.server({
-        root: 'dist/',
-        port: 8000
+        root: dest,
+        port: 80
     });
 });
 
