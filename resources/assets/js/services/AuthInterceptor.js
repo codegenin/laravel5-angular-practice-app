@@ -1,36 +1,20 @@
 'use strict';
 
 /**
- * Configuration Service
+ * Token Service
  */
 angular.module('cortejando')
-    .factory('ConfigService', function ($window) {
-        return {
-            basePath: '/',
-            apiBaseUrl: 'http://localhost/',
-            apiTokenName: 'cortejando',
-            apiStorage: checkBrowserStorage(),
-            loginPath: '/login',
-            tokenPath: '/mock/accessToken.json'
-        };
+    .factory('AuthTokenService', function ($window) {
+        var store = checkBrowserStorage();
+        var key = configData.apiTokenName;
 
-        // Simple fallback to check on what
-        // storage does the user browser supports
+        // Storage fullback function
         function checkBrowserStorage() {
             if (window.localStorage) {
                 return $window.localStorage;
             }
             return $window.sessionStorage;
         }
-    });
-
-/**
- * Token Service
- */
-angular.module('cortejando')
-    .factory('AuthTokenService', function ($window, ConfigService) {
-        var store = ConfigService.apiStorage;
-        var key = ConfigService.apiTokenName;
 
         return {
             getToken: getToken,

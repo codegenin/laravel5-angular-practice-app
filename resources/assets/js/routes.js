@@ -7,7 +7,7 @@ angular.module('cortejando')
 
         $urlRouterProvider.otherwise('/');
 
-        var templatePath = 'views/';
+        var templatePath = 'templates/';
 
         $stateProvider
             // Home page

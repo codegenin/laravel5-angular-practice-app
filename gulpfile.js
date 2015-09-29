@@ -20,7 +20,7 @@ var fonts = {
         bowerPath + 'font-awesome/fonts/*',
         source + 'lib/ionic/fonts/*',
     ],
-    out: dest + 'fonts/'
+    out: dest + 'assets/fonts/'
 };
 
 // CSS source file: .scss files
@@ -87,8 +87,8 @@ gulp.task('angular-scripts', function() {
 
 // Copy all html files to dist
 gulp.task('copy-html-files', function () {
-    return gulp.src(source + '**/*.html')
-        .pipe(gulp.dest(dest));
+    return gulp.src(source + 'views/**/*.html')
+        .pipe(gulp.dest(dest + 'templates'));
 });
 
 // Copy all image files to dist
@@ -143,7 +143,7 @@ gulp.task('default', [
     'copy-js-files',
     'copy-images-files',
     'translations',
-    'deploy',
+    //'deploy',
 ], function () {
     gulp.watch(css.watch, ['sass']);
     gulp.watch(source + '**/*.html', ['copy-html-files']);

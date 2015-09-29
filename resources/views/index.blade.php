@@ -1,45 +1,40 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cortejando Front</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/assets/css/app.css"/>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body ng-app="cortejando">
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+<div ng-include="'templates/partials/nav.html'"></div>
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+<div class="container">
+    <div ui-view></div>
+</div>
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
-            </div>
-        </div>
-    </body>
+</body>
+<!-- scripts -->
+<script src="/assets/js/vendor/vendor.min.js"></script>
+<script src="/assets/js/vendor/angular.min.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/config.js"></script>
+<script src="/translations/nl_NL.js"></script>
+<script src="/translations/es_ES.js"></script>
+<script src="/assets/js/routes.js"></script>
+<script src="/assets/js/controllers/MainController.js"></script>
+<script src="/assets/js/controllers/UserController.js"></script>
+<script src="/assets/js/controllers/AboutUsController.js"></script>
+<script src="/assets/js/services/AuthInterceptor.js"></script>
+<script src="/assets/js/services/AuthService.js"></script>
 </html>
