@@ -8,7 +8,7 @@ dist
 public/assets
 public/fonts
 public/js
-public/views
+public/templates
 public/lib
 public/translations
 /vendor
