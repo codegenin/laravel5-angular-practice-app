@@ -1,152 +1,79 @@
-// Gulp and plugins
-var gulp    = require('gulp'),
-    connect = require('gulp-connect'),
-    concat  = require('gulp-concat'),
-    sass    = require('gulp-sass'),
-    uglify  = require('gulp-uglify'),
-    rename  = require('gulp-rename'),
-    clean   = require('gulp-clean'),
-    gettext = require('gulp-angular-gettext');;
+var elixir  = require('laravel-elixir'),
+    gulp    = require('gulp'),
+    gettext = require('gulp-angular-gettext');
+;
 
-// Source and distribution folder
-var source      = 'resources/',
-    dest        = 'public/',
-    bowerPath   = 'bower_components/';
+var paths = {
+    'resources': 'resources',
+    'jquery': 'bower_components/jquery/dist',
+    'bootstrap': 'bower_components/bootstrap-sass/assets',
+    'angular': 'bower_components/angular',
+    'angularAnimate': 'bower_components/angular-animate',
+    'angularUIRouter': 'bower_components/angular-ui-router',
+    'angularGettext': 'bower_components/angular-gettext',
+    'fontawesome': 'bower_components/font-awesome',
+    'ionic': 'resources/lib/ionic',
+}
 
-// Fonts
-var fonts = {
-    in: [
-        bowerPath + 'bootstrap-sass/assets/fonts/**/*',
-        bowerPath + 'font-awesome/fonts/*',
-        source + 'lib/ionic/fonts/*',
-    ],
-    out: dest + 'assets/fonts/'
-};
+elixir(function (mix) {
 
-// CSS source file: .scss files
-var css = {
-    in: source + 'assets/sass/app.scss',
-    out: dest + 'assets/css/',
-    watch: source + 'assets/sass/**/*',
-    sassOpts: {
-        outputStyle: 'nested',
-        precison: 3,
-        errLogToConsole: true,
-        includePaths: [
-            source + 'lib/ionic/css',
-            source + 'lib/ionic/scss',
-            bowerPath + 'bootstrap-sass/assets/stylesheets',
-            bowerPath + 'font-awesome/css',
-        ]
-    }
-};
+    // Mix SASS
+    mix.sass("app.scss",
+        'public/assets/css/', {
+            includePaths: [
+                paths.resources + '/lib/ionic/css',
+                paths.resources + +'/lib/ionic/scss',
+                paths.bootstrap + '/stylesheets',
+                paths.fontawesome + '/css',
+            ]
+        });
 
-// Copy bootstrap required fonts to dist
-gulp.task('fonts', function () {
-    return gulp
-        .src(fonts.in)
-        .pipe(gulp.dest(fonts.out));
-});
+    // Copy Fonts
+    mix.copy(paths.bootstrap + '/fonts/bootstrap/**', 'public/assets/fonts')
+    mix.copy(paths.ionic + '/fonts/**', 'public/assets/fonts')
 
-// Compile scss
-gulp.task('sass', ['fonts'], function () {
-    return gulp.src(css.in)
-        .pipe(sass(css.sassOpts))
-        .pipe(gulp.dest(css.out));
-});
+    // Mix Vendor Scripts
+    mix.scripts([
+        paths.jquery + "/jquery.min.js",
+        paths.ionic + "/js/ionic.min.js",
+        "bower_components/bootstrap/dist/js/bootstrap.min.js",
+    ], 'public/assets/js/vendor/vendor.min.js', './');
 
-// Concatenates and minify vendor scripts
-gulp.task('vendor-scripts', function() {
-    return gulp.src([
-        bowerPath + 'jquery/dist/jquery.min.js',
-        source + 'lib/ionic/js/ionic.min.js',
-        bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
-    ])
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest(dest + 'assets/js/vendor/'))
-        .pipe(rename('vendor.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(dest + 'assets/js/vendor/'));;
-});
+    // Mix Angular Scripts
+    mix.scripts([
+        paths.angular + "/angular.js",
+        paths.angularAnimate + "/angular-animate.js",
+        paths.angularUIRouter + "/release/angular-ui-router.js",
+        paths.angularGettext + "/dist/angular-gettext.js"
+    ], 'public/assets/js/vendor/angular.min.js', './');
 
-// Concatenates and minify angular scripts
-gulp.task('angular-scripts', function() {
-    return gulp.src([
-        bowerPath + 'angular/angular.min.js',
-        bowerPath + 'angular-animate/angular-animate.min.js',
-        bowerPath + 'angular-route/angular-route.min.js',
-        bowerPath + 'angular-ui-router/release/angular-ui-router.min.js',
-        bowerPath + 'angular-gettext/dist/angular-gettext.js'
-    ])
-        .pipe(concat('angular.js'))
-        .pipe(gulp.dest(dest + 'assets/js/vendor/'))
-        .pipe(rename('angular.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(dest + 'assets/js/vendor/'));;;
-});
+    // Copy Html files
+    mix.copy(paths.resources + '/views/**/*.html', 'public/templates/');
 
-// Copy all html files to dist
-gulp.task('copy-html-files', function () {
-    return gulp.src(source + 'views/**/*.html')
-        .pipe(gulp.dest(dest + 'templates'));
-});
+    // Copy Images
+    mix.copy(paths.resources + '/assets/**/*.{jpg,jpeg,png,gif}',
+        'public/assets/');
 
-// Copy all image files to dist
-gulp.task('copy-images-files', function () {
-    return gulp.src(source + '**/*.{jpg,jpeg,png,gif}')
-        .pipe(gulp.dest(dest));
-});
+    // Copy Remaning JS Files
+    mix.copy(paths.resources + '/assets/js/**/*.js',
+        'public/assets/js/');
 
-// Copy all js files to dist
-gulp.task('copy-js-files', function () {
-    return gulp.src(source + '**/*.js')
-        .pipe(gulp.dest(dest));
-});
-
-// Clean all files in dist
-/*gulp.task('clean', function() {
-    gulp.src('./publi/!*')
-        .pipe(clean({force: true}));
-});*/
-
-// Pot file
-gulp.task('pot', function () {
-    return gulp.src([source +'/**/*.html', source + '/js/**/*.js'])
-        .pipe(gettext.extract('template.pot', {
-            // options to pass to angular-gettext-tools...
-        }))
-        .pipe(gulp.dest(source + 'po/'));
-});
-
-gulp.task('translations', function () {
-    return gulp.src( source + 'lang/po/**/*.po')
-        .pipe(gettext.compile({
-            // options to pass to angular-gettext-tools...
-        }))
-        .pipe(gulp.dest(dest + '/translations/'));
-});
-
-// Run local server
-gulp.task('deploy', function () {
-    connect.server({
-        root: dest,
-        port: 80
+    // Pot file
+    gulp.task('pot', function () {
+        return gulp.src([
+            paths.resources + '/view/**/*.html',
+            paths.resources + '/assets/js/**/*.js'])
+            .pipe(gettext.extract('template.pot', {
+                // options to pass to angular-gettext-tools...
+            }))
+            .pipe(gulp.dest(paths.resources + '/lang/po/'));
     });
-});
 
-// Default task
-gulp.task('default', [
-    'sass',
-    'vendor-scripts',
-    'angular-scripts',
-    'copy-html-files',
-    'copy-js-files',
-    'copy-images-files',
-    'translations',
-    //'deploy',
-], function () {
-    gulp.watch(css.watch, ['sass']);
-    gulp.watch(source + '**/*.html', ['copy-html-files']);
-    gulp.watch(source + '**/*.js', ['copy-js-files']);
-    gulp.watch(source + '**/*.{jpg,jpeg,png,gif}', ['copy-images-files']);
+    gulp.task('translations', function () {
+        return gulp.src(paths.resources + '/lang/po/**/*.po')
+            .pipe(gettext.compile({
+                // options to pass to angular-gettext-tools...
+            }))
+            .pipe(gulp.dest('public/translations/'));
+    });
 });
