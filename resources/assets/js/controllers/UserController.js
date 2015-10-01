@@ -18,7 +18,11 @@ angular.module('cortejando')
 
     .controller('AuthController', function ($scope, UserService) {
         $scope.signin = function () {
-            UserService.login();
+            var credentials = {
+                email: $scope.login.email,
+                password: $scope.login.password
+            };
+            UserService.login(credentials);
         };
     })
 

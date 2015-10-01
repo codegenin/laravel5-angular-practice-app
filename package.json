@@ -20,6 +20,7 @@
     "bootstrap-sass": "^3.0.0",
     "gulp": "^3.9.0",
     "gulp-angular-gettext": "^2.1.0",
-    "laravel-elixir": "^3.0.0"
+    "laravel-elixir": "^3.0.0",
+    "satellizer": "^0.12.5"
   }
 }

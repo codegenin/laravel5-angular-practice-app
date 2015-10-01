@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('index');
 });
+
+/**
+ * API Routes
+ */
+Route::group(['prefix' => 'api/v1'], function()
+{
+    Route::resource('users', 'UserController');
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+});

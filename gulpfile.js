@@ -10,6 +10,7 @@ var paths = {
     'angularAnimate': 'bower_components/angular-animate',
     'angularUIRouter': 'bower_components/angular-ui-router',
     'angularGettext': 'bower_components/angular-gettext',
+    'angularStorage': 'bower_components/ngstorage',
     'fontawesome': 'bower_components/font-awesome',
     'ionic': 'resources/lib/ionic',
 }
@@ -42,6 +43,7 @@ elixir(function (mix) {
     mix.scripts([
         paths.angular + "/angular.js",
         paths.angularAnimate + "/angular-animate.js",
+        //paths.angularStorage + "/ngStorage.js",
         paths.angularUIRouter + "/release/angular-ui-router.js",
         paths.angularGettext + "/dist/angular-gettext.js"
     ], 'public/assets/js/vendor/angular.min.js', './');

@@ -4,6 +4,7 @@
 
 angular.module("cortejando", [
     "ui.router",
+    //"ngStorage",
     "ngAnimate",
     "gettext"
 ])

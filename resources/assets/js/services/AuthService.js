@@ -20,11 +20,17 @@ angular.module('cortejando')
         }
 
         // Login a user
-        function login() {
-            return $http.get(configData.apiBaseUrl + configData.tokenPath, {}).then(function success(response) {
-                AuthTokenService.setToken(response.data.token);
-                $location.url(configData.basePath);
-                $rootScope.token = AuthTokenService.getToken();
+        function login($credentails) {
+            return $http.post(configData.apiBaseUrl + configData.tokenPath, $credentails).then(
+                function success(response) {
+                    if(response.data.token){
+                        AuthTokenService.setToken(response.data.token);
+                        $location.url(configData.basePath);
+                        $rootScope.token = AuthTokenService.getToken();
+                    } else {
+                        alert(response.data.error.message);
+                    }
+
                 return true;
             });
         }

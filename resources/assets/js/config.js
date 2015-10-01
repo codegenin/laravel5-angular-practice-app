@@ -3,5 +3,5 @@ var configData = {
     apiBaseUrl: 'http://localhost:8000',
     apiTokenName: 'cortejando',
     loginPath: '/login',
-    tokenPath: '/mock/accessToken.json'
+    tokenPath: '/api/v1/authenticate'
 }

@@ -40,10 +40,16 @@ angular.module('cortejando')
  * Register the interceptor
  */
 angular.module('cortejando')
-    .factory('AuthInterceptor', function (AuthTokenService) {
+    .factory('AuthInterceptor', function (AuthTokenService, $location) {
 
         return {
-            request: addToken
+            request: addToken,
+            'responseError': function (response) {
+                if (response.status === 401 || response.status === 403) {
+                    $location.path(configData.loginPath);
+                }
+                return $q.reject(response);
+            }
         };
 
         // Add token to request header
