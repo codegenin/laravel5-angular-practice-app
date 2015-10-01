@@ -1,7 +1,6 @@
 var elixir  = require('laravel-elixir'),
     gulp    = require('gulp'),
     gettext = require('gulp-angular-gettext');
-;
 
 var paths = {
     'resources': 'resources',
