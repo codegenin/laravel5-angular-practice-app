@@ -66,6 +66,16 @@ class ApiController extends Controller
     }
 
     /**
+     * Respond for user exist
+     *
+     * @param string $message
+     * @return array
+     */
+    public function respondUserExist($message = 'User already exist')
+    {
+        return $this->setStatusCode(409)->respondWithError($message);
+    }
+    /**
      * Display error respond message and status
      *
      * @param $message

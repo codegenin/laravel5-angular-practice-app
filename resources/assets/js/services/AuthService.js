@@ -6,6 +6,7 @@ angular.module('cortejando')
 
         return {
             login: login,
+            register: register,
             logout: logout,
             getUser: getUser,
             loggedIn: loggedIn
@@ -23,16 +24,30 @@ angular.module('cortejando')
         function login($credentails) {
             return $http.post(configData.apiBaseUrl + configData.tokenPath, $credentails).then(
                 function success(response) {
-                    if(response.data.token){
-                        AuthTokenService.setToken(response.data.token);
-                        $location.url(configData.basePath);
-                        $rootScope.token = AuthTokenService.getToken();
-                    } else {
-                        alert(response.data.error.message);
-                    }
-
+                    autheticated(response);
                 return true;
             });
+        }
+
+        // Register a user
+        function register($data) {
+            return $http.post(configData.apiBaseUrl + configData.registerPath, $data)
+                .then(
+                function success(response) {
+                    autheticated(response);
+                }
+            )
+        }
+
+        // Checks if user is authenticated
+        function autheticated(response) {
+            if(response.data.token){
+                AuthTokenService.setToken(response.data.token);
+                $location.url(configData.basePath);
+                $rootScope.token = AuthTokenService.getToken();
+            } else {
+                alert(response.data.error.message);
+            }
         }
 
         // Removes the token

@@ -2,13 +2,23 @@
 
 angular.module('cortejando')
 
-    .controller('RegisterController', function ($scope) {
+    .controller('RegisterController', function ($scope, UserService) {
 
         // Current Date
         $scope.date = new Date();
 
         $scope.save = function () {
-            alert('Data has been save!');
+            var registerData = {
+                name: $scope.register.name,
+                description: $scope.register.description,
+                dob: $scope.register.dob,
+                phone: $scope.register.phone,
+                gender: $scope.register.gender,
+                email: $scope.register.email,
+                password: $scope.register.password
+            };
+
+            UserService.register(registerData);
         };
 
         $scope.reset = function () {

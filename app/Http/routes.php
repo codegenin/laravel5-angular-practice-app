@@ -22,4 +22,5 @@ Route::group(['prefix' => 'api/v1'], function()
 {
     Route::resource('users', 'UserController');
     Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::post('register', 'AuthenticateController@register');
 });

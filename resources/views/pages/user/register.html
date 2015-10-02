@@ -75,6 +75,19 @@
             <i class="radio-icon ion-checkmark"></i>
         </label>
 
+        <!-- Email -->
+        <label for="user_email" class="item item-input">
+            <input type="email" id="user_email" ng-model="register.email" name="email"
+                   placeholder="{{'Email'|translate}}">
+        </label>
+
+        <!-- Password -->
+        <label for="user_password" class="item item-input">
+            <input type="password" id="user_password" ng-model="register.password"
+                   name="password"
+                   placeholder="{{'Password'|translate}}">
+        </label>
+
         <!-- Submit Button-->
         <button class="button button-block button-positive"
                ng-disabled="registerForm.$invalid" ng-click="save()" translate>
