@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Cortejando\Transformers\UserTransformer;
+use App\Transformers\UserTransformer;
 use App\User;
+use Cyvelnet\Laravel5Fractal\Facades\Fractal;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Controller;
 class UserController extends ApiController
 {
     /*
-     * @var App\Cortejando\Transformers\UserTransformer
+     * @var Fractal
      */
     protected $userTransformer;
 
@@ -39,9 +40,10 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate();
         return response()->json([
-            'data' => $this->userTransformer->transformCollection($users->toArray())
+            'data' => Fractal::collection($users, new UserTransformer())
+                ->responseJson(200)
         ]);
     }
 
@@ -81,7 +83,8 @@ class UserController extends ApiController
 
         // Return the user data
         return response()->json([
-           'data'   => $this->userTransformer->transform($user)
+           'data'   => Fractal::item($user, new UserTransformer())
+            ->responseJson(200)
         ]);
     }
 

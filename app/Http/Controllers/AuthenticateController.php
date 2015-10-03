@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cortejando\Transformers\UserTransformer;
+use App\Http\Requests\UserRegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -35,42 +36,21 @@ class AuthenticateController extends ApiController
         }
 
         // if no errors are encountered we can return a JWT
-        return response()->json(compact('token'));
+        return $this->responseWithToken($token);
     }
 
     /**
      * Process user registration
      *
-     * @param Request $request
+     * @param UserRegisterRequest|Request $request
      * @return array
      */
-    public function register(Request $request)
+    public function register(UserRegisterRequest $request)
     {
-        $registerData = [
-            'name'      => $request->input('name'),
-            'description' => $request->input('description'),
-            'dob'       => $request->input('dob'),
-            'phone'     => $request->input('phone'),
-            'gender'     => $request->input('gender'),
-            'email'     => $request->input('email'),
-            'password'  => bcrypt($request->input('password')),
-        ];
-
-        // Inline validation - @TODO - transfer to validator class maybe
-        // Must not already exist in the `email` column of `users` table
-        $rules      = ['email' => 'unique:users,email'];
-        $validator  = Validator::make($registerData, $rules);
-
-        // If validator fails
-        if ($validator->fails()) {
-            return $this->respondUserExist();
-        }
-
         // Proceed
-        $user   = User::create($registerData);
+        $user   = User::create($request->all());
         $token  = JWTAuth::fromUser($user);
 
-        return response()->json(compact('token'));
-
+        return $this->responseWithToken($token);
     }
 }

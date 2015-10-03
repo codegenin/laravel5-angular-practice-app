@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiController extends Controller
 {
@@ -40,7 +41,8 @@ class ApiController extends Controller
      */
     public function respondInvalidCredential($message = 'Invalid Credentials')
     {
-        return $this->setStatusCode(401)->respondWithError($message);
+        return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)
+            ->respondWithError($message);
     }
 
     /**
@@ -51,7 +53,8 @@ class ApiController extends Controller
      */
     public function respondCannotCreateToken($message = 'Cannot Create Token')
     {
-        return $this->setStatusCode(500)->respondWithError($message);
+        return $this->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->respondWithError($message);
     }
 
     /**
@@ -62,7 +65,8 @@ class ApiController extends Controller
      */
     public function respondNotFound($message = 'Resource Not Found')
     {
-        return $this->setStatusCode(404)->respondWithError($message);
+        return $this->setStatusCode(Response::HTTP_NOT_FOUND)
+            ->respondWithError($message);
     }
 
     /**
@@ -73,8 +77,22 @@ class ApiController extends Controller
      */
     public function respondUserExist($message = 'User already exist')
     {
-        return $this->setStatusCode(409)->respondWithError($message);
+        return $this->setStatusCode(Response::HTTP_CONFLICT)->respondWithError($message);
     }
+
+    /**
+     * Display response token
+     *
+     * @param $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function responseWithToken($token)
+    {
+        return response()->json([
+            'token' => $token
+        ]);
+    }
+
     /**
      * Display error respond message and status
      *

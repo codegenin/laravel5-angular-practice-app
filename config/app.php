@@ -145,7 +145,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-
+        Cyvelnet\Laravel5Fractal\Laravel5FractalServiceProvider::class,
     ],
 
     /*
@@ -198,8 +198,9 @@ return [
         /*
          * Application Facades
          */
-        'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTAuth'    => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Fractal'    => Cyvelnet\Laravel5Fractal\Facades\Fractal::class
 
     ],
 
