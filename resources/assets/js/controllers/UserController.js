@@ -2,23 +2,14 @@
 
 angular.module('cortejando')
 
-    .controller('RegisterController', function ($scope, UserService) {
+    .controller('RegisterController', function ($scope, AuthService) {
 
         // Current Date
         $scope.date = new Date();
 
-        $scope.save = function () {
-            var registerData = {
-                name: $scope.register.name,
-                description: $scope.register.description,
-                dob: $scope.register.dob,
-                phone: $scope.register.phone,
-                gender: $scope.register.gender,
-                email: $scope.register.email,
-                password: $scope.register.password
-            };
-
-            UserService.register(registerData);
+        $scope.registerData = {};
+        $scope.register = function (registerData) {
+            AuthService.register(registerData);
         };
 
         $scope.reset = function () {
@@ -26,20 +17,31 @@ angular.module('cortejando')
         }
     })
 
-    .controller('AuthController', function ($scope, UserService) {
-        $scope.signin = function () {
-            var credentials = {
-                email: $scope.login.email,
-                password: $scope.login.password
-            };
-            UserService.login(credentials);
+    .controller('AuthController', function ($scope, AuthService) {
+        $scope.credentials = {};
+        $scope.login = function (credentials) {
+            AuthService.login(credentials);
         };
     })
 
-    .controller('LogoutController', function ($location, UserService) {
-        UserService.logout();
+    .controller('LogoutController', function ($location, AuthService) {
+        AuthService.logout();
     })
 
     .controller('ProfileController', function ($scope, UserService) {
-        UserService.getUser();
+
+        $scope.date = new Date();
+
+        var getPost = UserService.get();
+        getPost.success(function(response){
+            $scope.userData = response;
+        });
+
+        $scope.userData = {};
+        $scope.update = function(userData){
+            var request = UserService.update(userData);
+            request.success(function(response){
+                $scope.flash = response.status;
+            });
+        }
     });

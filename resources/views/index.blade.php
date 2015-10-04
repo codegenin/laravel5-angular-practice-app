@@ -37,4 +37,5 @@
 <script src="/assets/js/controllers/AboutUsController.js"></script>
 <script src="/assets/js/services/AuthInterceptor.js"></script>
 <script src="/assets/js/services/AuthService.js"></script>
+<script src="/assets/js/services/UserService.js"></script>
 </html>

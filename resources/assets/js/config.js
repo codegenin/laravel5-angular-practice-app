@@ -4,5 +4,6 @@ var configData = {
     apiTokenName: 'cortejando',
     loginPath: '/login',
     tokenPath: '/api/v1/authenticate',
-    registerPath: '/api/v1/register'
+    registerPath: '/api/v1/register',
+    editProfile: '/api/v1/user/edit'
 }

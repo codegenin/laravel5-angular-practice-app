@@ -32,9 +32,11 @@ class UserTransformer extends TransformerAbstract
     public function transform($user)
     {
         return [
-            'complete_name' => $user->name,
-            'overview'      => $user->description,
-            'date_of_birth' => $user->dob,
+            'id'            => $user->id,
+            'name'          => $user->name,
+            'description'   => $user->description,
+            'dob'           => $user->dob,
+            'phone'         => $user->phone,
             'gender'        => $user->gender
         ];
     }

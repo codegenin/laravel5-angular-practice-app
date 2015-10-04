@@ -20,7 +20,12 @@ Route::get('/', function () {
  */
 Route::group(['prefix' => 'api/v1'], function()
 {
-    Route::resource('users', 'UserController');
+    // User Routes
+    Route::post('user/update', 'UserController@update');
+    Route::get('users', 'UserController@index');
+    Route::get('user/edit', 'UserController@edit');
+
+    // Login And Register Routes
     Route::post('authenticate', 'AuthenticateController@authenticate');
     Route::post('register', 'AuthenticateController@register');
 });

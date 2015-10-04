@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('cortejando')
-    .factory('UserService',
+    .factory('AuthService',
     function ($rootScope, AuthTokenService, $http, $q, $location) {
 
         return {
@@ -60,7 +60,7 @@ angular.module('cortejando')
         // Get user information
         function getUser() {
             if (AuthTokenService.getToken()) {
-                $http.get(configData.apiBaseUrl + configData.tokenPath)
+                $http.get(configData.apiBaseUrl + configData.userProfile)
                     .then(function (response) {
                         $rootScope.uname = response.data.user.name;
                     });

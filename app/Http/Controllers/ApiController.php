@@ -81,6 +81,16 @@ class ApiController extends Controller
     }
 
     /**
+     * @param string $message
+     * @return mixed
+     * @internal param array $data
+     */
+    public function respondRecordUpdated($message = 'Records updated successfully.')
+    {
+        return $this->setStatusCode(Response::HTTP_OK)->respondSuccessful($message);
+    }
+
+    /**
      * Display response token
      *
      * @param $token
@@ -93,6 +103,20 @@ class ApiController extends Controller
         ]);
     }
 
+    /**
+     * @param $message
+     * @return mixed
+     * @internal param $data
+     */
+    public function respondSuccessful($message)
+    {
+        return response()->json([
+            'success' => [
+                'message'   => $message,
+                'code'      => $this->getStatusCode()
+            ]
+        ]);
+    }
     /**
      * Display error respond message and status
      *

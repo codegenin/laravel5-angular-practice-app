@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Transformers\UserTransformer;
 use App\User;
 use Cyvelnet\Laravel5Fractal\Facades\Fractal;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends ApiController
 {
@@ -26,7 +29,7 @@ class UserController extends ApiController
          * Apply the jwt.auth middleware
          */
         $this->middleware('jwt.auth', [
-            'except' => ['create','store','logout'] // Do not enable auth on this methods
+            'except' => ['logout'] // Do not enable auth on this methods
         ]);
 
         $this->userTransformer = $userTransformer;
@@ -43,29 +46,8 @@ class UserController extends ApiController
         $users = User::paginate();
         return response()->json([
             'data' => Fractal::collection($users, new UserTransformer())
-                ->responseJson(200)
+                ->responseJson(Response::HTTP_ACCEPTED)
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -84,41 +66,35 @@ class UserController extends ApiController
         // Return the user data
         return response()->json([
            'data'   => Fractal::item($user, new UserTransformer())
-            ->responseJson(200)
+            ->responseJson(Response::HTTP_ACCEPTED)
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $user = Auth::user();
+        return Fractal::item($user, new UserTransformer())
+            ->responseJson(Response::HTTP_ACCEPTED);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UserUpdateRequest $request
      * @return \Illuminate\Http\Response
+     * @internal param UserUpdateRequest|Request $request
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request)
     {
-        //
+        $user = User::findOrFail($request->input('id'));
+        $user->update($request->all());
+
+        return $this->respondRecordUpdated('User has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

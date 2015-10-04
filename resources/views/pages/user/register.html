@@ -1,4 +1,4 @@
-<form id="registerForm" name="registerForm" novalidate>
+<form id="registerForm" name="registerForm" ng-submit="register(registerData)" novalidate>
 
     <!-- Error Blocks -->
     <p class="help-block"
@@ -27,7 +27,7 @@
         <label for="user_name" class="item item-input"
                ng-class="{'has-error': registerForm.name.$touched && registerForm.name.$invalid}">
             <input name="name" id="user_name" type="text"
-                   ng-model="register.name"
+                   ng-model="registerData.name"
                    ng-minlength="6" ng-maxlength="50"
                    placeholder="{{'Your name' | translate}}" required>
         </label>
@@ -36,7 +36,7 @@
         <label for="user_description" class="item item-input"
                ng-class="{'has-error': registerForm.description.$touched && registerForm.description.$invalid}">
             <textarea name="description" id="user_description"
-                      ng-model="register.description"
+                      ng-model="registerData.description"
                       rows="10" ng-maxlength="500"
                       placeholder="{{'Your description'|translate}}"
                       ng-maxlength="500" required></textarea>
@@ -45,7 +45,7 @@
         <!-- Date Of Birht -->
         <label for="user_dob" class="item item-input"
                ng-class="{'has-error': registerForm.dob.$touched && registerForm.dob.$invalid}">
-            <input name="dob" type="date" id="user_dob" ng-model="register.dob" min="1960-01-01"
+            <input name="dob" type="date" id="user_dob" ng-model="registerData.dob" min="1960-01-01"
                    max="{{date | date:'yyyy-MM-dd'}}"
                    ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
                    placeholder="{{'Date Of Birth - yyyy-mm-dd'|translate}}" required>
@@ -53,22 +53,22 @@
 
         <!-- Phone Number -->
         <label for="user_phone" class="item item-input">
-            <input type="text" id="user_phone" ng-model="register.phone" name="phone"
+            <input type="text" id="user_phone" ng-model="registerData.phone" name="phone"
                    ng-pattern="/^[0-9 + -]+$/" placeholder="{{'Phone Number'|translate}}">
         </label>
 
         <!-- Gender -->
         <label class="item item-radio">
-            <input type="radio" ng-model="register.gender" name="gender"
-                   value="male" ng-required="!register.gender">
+            <input type="radio" ng-model="registerData.gender" name="gender"
+                   value="male" ng-required="!registerData.gender">
             <div class="item-content" translate>
                 Male
             </div>
             <i class="radio-icon ion-checkmark"></i>
         </label>
         <label class="item item-radio">
-            <input type="radio" ng-model="register.gender" name="gender"
-                   value="female" ng-required="!register.gender">
+            <input type="radio" ng-model="registerData.gender" name="gender"
+                   value="female" ng-required="!registerData.gender">
             <div class="item-content" translate>
                 Female
             </div>
@@ -77,20 +77,20 @@
 
         <!-- Email -->
         <label for="user_email" class="item item-input">
-            <input type="email" id="user_email" ng-model="register.email" name="email"
+            <input type="email" id="user_email" ng-model="registerData.email" name="email"
                    placeholder="{{'Email'|translate}}">
         </label>
 
         <!-- Password -->
         <label for="user_password" class="item item-input">
-            <input type="password" id="user_password" ng-model="register.password"
+            <input type="password" id="user_password" ng-model="registerData.password"
                    name="password"
                    placeholder="{{'Password'|translate}}">
         </label>
 
         <!-- Submit Button-->
         <button class="button button-block button-positive"
-               ng-disabled="registerForm.$invalid" ng-click="save()" translate>
+                type="submit" ng-disabled="registerForm.$invalid" translate>
             Register
             </button>
     </div>
@@ -113,7 +113,7 @@
 
                     <div class="col-sm-9">
                         <input class="required form-control" id="user_name"
-                               ng-model="register.name" name="name" type="text"
+                               ng-model="registerData.name" name="name" type="text"
                                ng-minlength="6" ng-maxlength="50" required>
                         <p class="help-block" ng-show="registerForm.$dirty && registerForm.name.$invalid">
                             Please enter between 6 to 50 characters.</p>
@@ -128,7 +128,7 @@
 
                     <div class="col-sm-9">
                         <textarea name="description" id="user_description"
-                                  ng-model="register.description"
+                                  ng-model="registerData.description"
                                   style="width:100%" rows="10" ng-maxlength="500"
                                   placeholder="Your description"
                                   ng-maxlength="500" required></textarea>
@@ -147,7 +147,7 @@
 
                     <div class="col-sm-9">
                         <input class="required form-control" id="user_dob"
-                               ng-model="register.dob" min="1960-01-01"
+                               ng-model="registerData.dob" min="1960-01-01"
                                max="{{date | date:'yyyy-MM-dd'}}"
                                ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
                                name="dob" type="date"
@@ -165,7 +165,7 @@
 
                     <div class="col-sm-9">
                         <input class="required form-control" id="user_phone"
-                               ng-model="register.phone" name="phone"
+                               ng-model="registerData.phone" name="phone"
                                type="text" ng-pattern="/^[0-9 + -]+$/">
                         <p class="help-block" ng-show="registerForm.phone.$invalid">
                             Please phone number in +###-####-### format.</p>
@@ -181,16 +181,16 @@
                     <div class="col-sm-8">
                         <label class="radio-inline">
                             <input type="radio"
-                                   ng-model="register.gender"
+                                   ng-model="registerData.gender"
                                    name="gender" id="user_gender"
-                                   value="male" ng-required="!register.gender">
+                                   value="male" ng-required="!registerData.gender">
                             Male
                         </label>
                         <label class="radio-inline">
                             <input type="radio"
-                                   ng-model="register.gender"
+                                   ng-model="registerData.gender"
                                    name="gender" id="user_gender_female"
-                                   value="female" ng-required="!register.gender">
+                                   value="female" ng-required="!registerData.gender">
                             Female
                         </label>
                         <p class="help-block" ng-show="registerForm.$dirty &&

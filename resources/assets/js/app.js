@@ -7,7 +7,7 @@ angular.module("cortejando", [
     "angular-loading-bar",
     "ngAnimate",
     "gettext"
-])
+]);
 
 
 

@@ -42,12 +42,7 @@ angular.module('cortejando')
             .state('profile', {
                 url: '/profile',
                 templateUrl: templatePath + 'pages/user/profile.html',
-                controller: 'ProfileController',
-                resolve: {
-                    loggedInUser: function(UserService){
-                        return UserService.loggedIn();
-                    }
-                }
+                controller: 'ProfileController'
             })
 
         $locationProvider.html5Mode(true);
