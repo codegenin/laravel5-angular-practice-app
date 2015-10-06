@@ -1,5 +1,6 @@
 <?php
 
+use App\Date;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -16,8 +17,10 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         User::truncate(); // Empty users table
+        Date::truncate(); // Empty users table
 
         $this->call(UserTableSeeder::class);
+        $this->call(DateTableSeeder::class);
 
         Model::reguard();
     }

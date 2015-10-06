@@ -23,3 +23,16 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Date::class, function(Faker\Generator $faker) {
+
+    $users = App\User::all()->lists('id')->toArray();
+
+   return [
+       'description'    => $faker->sentence(mt_rand(3, 5)),
+       'time'           => $faker->unixTime(),
+       'location_name'  => $faker->randomElement(['Home','Park','Builder']),
+       'state'          => $faker->randomElement(['active','pending','completed']),
+       'owner_id'       => $faker->randomElement($users)
+   ];
+});

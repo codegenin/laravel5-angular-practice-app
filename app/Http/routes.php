@@ -20,6 +20,10 @@ Route::get('/', function () {
  */
 Route::group(['prefix' => 'api/v1'], function()
 {
+    // Dates Routes
+    Route::resource('dates', 'DateController', [
+        'only' => ['edit', 'update', 'create', 'store']]);
+
     // User Routes
     Route::post('user/update', 'UserController@update');
     Route::get('users', 'UserController@index');
