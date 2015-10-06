@@ -23,6 +23,8 @@ Route::group(['prefix' => 'api/v1'], function()
     // Dates Routes
     Route::resource('dates', 'DateController', [
         'only' => ['edit', 'update', 'create', 'store']]);
+    Route::get('dates', 'DateController@listDates');
+    Route::get('dates/{id}', 'DateController@getDate');
 
     // User Routes
     Route::post('user/update', 'UserController@update');

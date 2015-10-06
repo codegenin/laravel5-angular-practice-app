@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Date;
 use App\Transformers\DateTransformer;
+use Cyvelnet\Laravel5Fractal\Facades\Fractal;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-class DateController extends Controller
+class DateController extends ApiController
 {
     protected $dateTransformer;
 
@@ -33,7 +37,15 @@ class DateController extends Controller
      */
     public function listDates()
     {
+        $user = Auth::user()->id;
 
+        $dates = Date::where('state', 'active')->where('owner_id', $user)
+            ->paginate();
+
+        return response()->json([
+            'data' => Fractal::collection($dates, new DateTransformer())
+                ->responseJson(Response::HTTP_ACCEPTED)
+        ]);
     }
 
     /**
@@ -44,7 +56,16 @@ class DateController extends Controller
      */
     public function getDate($id)
     {
-        //
+        // Check if we have a user
+        if(! $date = Date::find($id)) {
+            return $this->respondNotFound('Date data not found'); // Not found
+        }
+
+        // Return the user data
+        return response()->json([
+            'data'   => Fractal::item($date, new DateTransformer())
+                ->responseJson(Response::HTTP_ACCEPTED)
+        ]);
     }
 
     /**
