@@ -3,27 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserUpdateRequest;
+use App\Repositories\User\DbUserRepository;
+use App\Repositories\User\userRepo;
 use App\Transformers\UserTransformer;
 use App\User;
 use Cyvelnet\Laravel5Fractal\Facades\Fractal;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends ApiController
 {
-    /*
+    /**
      * @var Fractal
      */
     protected $userTransformer;
+    /**
+     * @var userRepo
+     */
+    private $userRepo;
 
     /**
      * UserController constructor.
      * @param UserTransformer $userTransformer
+     * @param DbUserRepository $userRepository
+     * @internal param DbUserRepository|userRepo $userRepo
      */
-    public function __construct(UserTransformer $userTransformer)
+    public function __construct(
+        UserTransformer $userTransformer,
+        DbUserRepository $userRepository)
     {
         /*
          * Apply the jwt.auth middleware
@@ -32,7 +39,8 @@ class UserController extends ApiController
             'except' => ['logout'] // Do not enable auth on this methods
         ]);
 
-        $this->userTransformer = $userTransformer;
+        $this->userTransformer  = $userTransformer;
+        $this->userRepo         = $userRepository;
     }
 
 
@@ -41,9 +49,9 @@ class UserController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getUsers()
     {
-        $users = User::paginate();
+        $users = $this->userRepo->paginate(10);
         return response()->json([
             'data' => Fractal::collection($users, new UserTransformer())
                 ->responseJson(Response::HTTP_ACCEPTED)
@@ -56,10 +64,10 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getUser($id)
     {
         // Check if we have a user
-        if(! $user = User::find($id)) {
+        if(! $user = $this->userRepo->find($id)) {
             return $this->respondNotFound('User data not found'); // Not found
         }
 
@@ -75,9 +83,9 @@ class UserController extends ApiController
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function edit()
+    public function editUser()
     {
-        $user = Auth::user();
+        $user = $this->getAuthenticatedUser();
         return Fractal::item($user, new UserTransformer())
             ->responseJson(Response::HTTP_ACCEPTED);
     }
@@ -89,9 +97,9 @@ class UserController extends ApiController
      * @internal param UserUpdateRequest|Request $request
      * @internal param int $id
      */
-    public function update(UserUpdateRequest $request)
+    public function updateUser(UserUpdateRequest $request)
     {
-        $user = User::findOrFail($request->input('id'));
+        $user = $this->userRepo->find($request->input('id'));
         $user->update($request->all());
 
         return $this->respondRecordUpdated('User has been updated');

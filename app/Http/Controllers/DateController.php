@@ -2,32 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Date;
+use App\Repositories\Date\DbDateRepository;
 use App\Transformers\DateTransformer;
 use Cyvelnet\Laravel5Fractal\Facades\Fractal;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class DateController extends ApiController
 {
     protected $dateTransformer;
+    /**
+     * @var DbDateRepository
+     */
+    private $dateRepo;
 
     /**
      * DateController constructor.
      *
      * @param DateTransformer $dateTransformer
+     * @param DateRepository|DbDateRepository $dateRepository
      */
-    public function __construct(DateTransformer $dateTransformer)
+    public function __construct(
+        DateTransformer $dateTransformer,
+        DbDateRepository $dateRepository)
     {
         /*
          * Apply the jwt.auth middleware
          */
         $this->middleware('jwt.auth'); // Enable auth for all methods
 
-        $this->dateTransformer = $dateTransformer;
+        $this->dateTransformer  = $dateTransformer;
+        $this->dateRepo         = $dateRepository;
     }
 
     /**
@@ -35,12 +40,10 @@ class DateController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function listDates()
+    public function getListDates()
     {
-        $user = Auth::user()->id;
-
-        $dates = Date::where('state', 'active')->where('owner_id', $user)
-            ->paginate();
+        $user   = $this->getAuthenticatedUser();
+        $dates  = $this->dateRepo->getActiveDatesNotOwnedByUser($user->id);
 
         return response()->json([
             'data' => Fractal::collection($dates, new DateTransformer())
@@ -57,7 +60,7 @@ class DateController extends ApiController
     public function getDate($id)
     {
         // Check if we have a user
-        if(! $date = Date::find($id)) {
+        if(! $date = $this->dateRepo->find($id)) {
             return $this->respondNotFound('Date data not found'); // Not found
         }
 
@@ -66,60 +69,5 @@ class DateController extends ApiController
             'data'   => Fractal::item($date, new DateTransformer())
                 ->responseJson(Response::HTTP_ACCEPTED)
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

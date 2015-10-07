@@ -15,7 +15,7 @@ class CreateDatesTable extends Migration
         Schema::create('dates', function (Blueprint $table) {
             $table->increments('id');
             $table->text('description');
-            $table->integer('time');
+            $table->timestamp('time');
             $table->string('place');
             $table->string('location_name');
             $table->integer('location_lat');

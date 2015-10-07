@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cortejando\Transformers\UserTransformer;
 use App\Http\Requests\UserRegisterRequest;
+use App\Repositories\User\DbUserRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -15,6 +16,20 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticateController extends ApiController
 {
+    /**
+     * @var DbUserRepository
+     */
+    private $userRepository;
+
+    /**
+     * AuthenticateController constructor.
+     * @param DbUserRepository $userRepository
+     */
+    public function __construct(DbUserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Authenticate a user
      *
@@ -49,7 +64,7 @@ class AuthenticateController extends ApiController
     public function register(UserRegisterRequest $request)
     {
         // Proceed
-        $user   = User::create($request->all());
+        $user   = $this->userRepository->create($request->all());
         $token  = JWTAuth::fromUser($user);
 
         return $this->responseWithToken($token);

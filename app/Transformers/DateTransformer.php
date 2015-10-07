@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 
+use Carbon\Carbon;
 use League\Fractal;
 use League\Fractal\TransformerAbstract;
 use League\Fractal\Resource\Collection;
@@ -34,7 +35,7 @@ class DateTransformer extends TransformerAbstract
         return [
             'id'            => $date->id,
             'description'   => $date->description,
-            'time'          => $date->time,
+            'time_timestamp' => Carbon::parse($date->time)->format('F d, Y @ H:ia'),
             'location_name' => $date->location_name,
             'state'         => $date->state
         ];

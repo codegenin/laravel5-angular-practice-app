@@ -30,8 +30,11 @@ $factory->define(App\Date::class, function(Faker\Generator $faker) {
 
    return [
        'description'    => $faker->sentence(mt_rand(3, 5)),
-       'time'           => $faker->unixTime(),
+       'time'           => $faker->dateTimeThisYear,
+       'place'          => $faker->sentence(1),
        'location_name'  => $faker->randomElement(['Home','Park','Builder']),
+       'location_lat'   => $faker->numberBetween(1, 2000),
+       'location_long'   => $faker->numberBetween(1, 4000),
        'state'          => $faker->randomElement(['active','pending','completed']),
        'owner_id'       => $faker->randomElement($users)
    ];

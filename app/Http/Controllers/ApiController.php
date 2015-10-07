@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApiController extends Controller
 {
@@ -131,5 +133,25 @@ class ApiController extends Controller
                 'code'      => $this->getStatusCode()
             ]
         ]);
+    }
+
+    /**
+     * Get the api authenticated user
+     *
+     * @return array
+     */
+    protected function getAuthenticatedUser()
+    {
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return $this->respondNotFound('User record not found');
+            }
+        } catch (JWTException $e) {
+            // something went wrong
+            return $this->respondInvalidCredential();
+        }
+
+        // the token is valid and we have found the user via the sub claim
+        return $user;
     }
 }

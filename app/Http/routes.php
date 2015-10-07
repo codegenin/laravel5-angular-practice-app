@@ -21,15 +21,14 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api/v1'], function()
 {
     // Dates Routes
-    Route::resource('dates', 'DateController', [
-        'only' => ['edit', 'update', 'create', 'store']]);
-    Route::get('dates', 'DateController@listDates');
+    Route::get('dates', 'DateController@getListDates');
     Route::get('dates/{id}', 'DateController@getDate');
 
     // User Routes
-    Route::post('user/update', 'UserController@update');
-    Route::get('users', 'UserController@index');
-    Route::get('user/edit', 'UserController@edit');
+    Route::post('user/update', 'UserController@updateUser');
+    Route::get('users', 'UserController@getUsers');
+    Route::get('user/edit', 'UserController@editUser');
+    Route::get('users/{id}', 'UserController@getUser');
 
     // Login And Register Routes
     Route::post('authenticate', 'AuthenticateController@authenticate');
