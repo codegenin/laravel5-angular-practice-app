@@ -16,6 +16,7 @@ class DateController extends ApiController
      * @var DbDateRepository
      */
     private $dateRepo;
+    private $auth;
 
     /**
      * DateController constructor.
@@ -32,6 +33,7 @@ class DateController extends ApiController
 
         $this->dateTransformer = $dateTransformer;
         $this->dateRepo        = $dateRepository;
+        $this->authId          = (Auth::user()) ? Auth::user()->id : '';
     }
 
     /**
@@ -41,8 +43,8 @@ class DateController extends ApiController
      */
     public function getListDates()
     {
-        $user  = Auth::user(); //jwt-auth package supports Laravel Auth
-        $dates = $this->dateRepo->getActiveDatesNotOwnedByUser($user->id);
+
+        $dates = $this->dateRepo->getActiveDatesNotOwnedByUser($this->authId);
 
         return response()->json([
             'data' => Fractal::collection($dates, new DateTransformer())
