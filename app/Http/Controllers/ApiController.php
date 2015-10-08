@@ -134,24 +134,4 @@ class ApiController extends Controller
             ]
         ]);
     }
-
-    /**
-     * Get the api authenticated user
-     *
-     * @return array
-     */
-    protected function getAuthenticatedUser()
-    {
-        try {
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return $this->respondNotFound('User record not found');
-            }
-        } catch (JWTException $e) {
-            // something went wrong
-            return $this->respondInvalidCredential();
-        }
-
-        // the token is valid and we have found the user via the sub claim
-        return $user;
-    }
 }

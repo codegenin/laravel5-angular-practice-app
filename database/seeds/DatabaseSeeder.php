@@ -16,9 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        User::truncate(); // Empty users table
-        Date::truncate(); // Empty users table
-
         $this->call(UserTableSeeder::class);
         $this->call(DateTableSeeder::class);
 

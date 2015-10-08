@@ -7,7 +7,7 @@ namespace App\Repositories\Date;
  * Interface DateRepository
  * @package App\Repositories\Date
  */
-interface DateRepository
+interface DateRepositoryInterface
 {
     public function getActiveDatesNotOwnedByUser($userId);
 }

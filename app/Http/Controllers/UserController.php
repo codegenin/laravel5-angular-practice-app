@@ -24,23 +24,21 @@ class UserController extends ApiController
 
     /**
      * UserController constructor.
-     * @param UserTransformer $userTransformer
+     * @param UserTransformer  $userTransformer
      * @param DbUserRepository $userRepository
-     * @internal param DbUserRepository|userRepo $userRepo
      */
-    public function __construct(
-        UserTransformer $userTransformer,
-        DbUserRepository $userRepository)
+    public function __construct(UserTransformer $userTransformer, DbUserRepository $userRepository)
     {
         /*
          * Apply the jwt.auth middleware
          */
         $this->middleware('jwt.auth', [
-            'except' => ['logout'] // Do not enable auth on this methods
+            'except' => ['logout']
+            // Do not enable auth on this methods
         ]);
 
-        $this->userTransformer  = $userTransformer;
-        $this->userRepo         = $userRepository;
+        $this->userTransformer = $userTransformer;
+        $this->userRepo        = $userRepository;
     }
 
 
@@ -52,29 +50,30 @@ class UserController extends ApiController
     public function getUsers()
     {
         $users = $this->userRepo->paginate(10);
+
         return response()->json([
             'data' => Fractal::collection($users, new UserTransformer())
-                ->responseJson(Response::HTTP_ACCEPTED)
+                             ->responseJson(Response::HTTP_ACCEPTED)
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function getUser($id)
     {
         // Check if we have a user
-        if(! $user = $this->userRepo->find($id)) {
+        if (!$user = $this->userRepo->find($id)) {
             return $this->respondNotFound('User data not found'); // Not found
         }
 
         // Return the user data
         return response()->json([
-           'data'   => Fractal::item($user, new UserTransformer())
-            ->responseJson(Response::HTTP_ACCEPTED)
+            'data' => Fractal::item($user, new UserTransformer())
+                             ->responseJson(Response::HTTP_ACCEPTED)
         ]);
     }
 
@@ -86,8 +85,9 @@ class UserController extends ApiController
     public function editUser()
     {
         $user = $this->getAuthenticatedUser();
+
         return Fractal::item($user, new UserTransformer())
-            ->responseJson(Response::HTTP_ACCEPTED);
+                      ->responseJson(Response::HTTP_ACCEPTED);
     }
 
     /**

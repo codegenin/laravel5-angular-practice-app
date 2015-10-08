@@ -9,7 +9,7 @@ use App\Repositories\DbRepository;
  * Class DbDateRepository
  * @package App\Repositories\Date
  */
-class DbDateRepository extends DbRepository implements DateRepository
+class DbDateRepository extends DbRepository implements DateRepositoryInterface
 {
     /**
      * @var Date
@@ -29,7 +29,6 @@ class DbDateRepository extends DbRepository implements DateRepository
     /**
      * Return the active dates
      * which are not owned by the current logged in user
-     *
      * @param $userId
      * @return mixed
      */

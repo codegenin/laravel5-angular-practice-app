@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Date extends Model
 {
-    protected $dates = ['time']; // initialize `time` as Carbon instance
+    /**
+     * Initialize `time` as Carbon instance
+     */
+    protected $dates = ['time'];
+
+    /**
+     * Date belongs to user relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

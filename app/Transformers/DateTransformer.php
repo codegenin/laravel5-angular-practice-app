@@ -33,11 +33,12 @@ class DateTransformer extends TransformerAbstract
     public function transform($date)
     {
         return [
-            'id'            => $date->id,
-            'description'   => $date->description,
-            'time_timestamp' => Carbon::parse($date->time)->format('F d, Y @ H:ia'),
-            'location_name' => $date->location_name,
-            'state'         => $date->state
+            'id'             => $date->id,
+            'description'    => $date->description,
+            'time_timestamp' => Carbon::parse($date->time)
+                                      ->format(config('cortejando.timestamp_format')),
+            'location_name'  => $date->location_name,
+            'state'          => $date->state
         ];
     }
 

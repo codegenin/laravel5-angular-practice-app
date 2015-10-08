@@ -10,7 +10,7 @@ use App\User;
  * User repository implementation
  * @package App\Repositories\User
  */
-class DbUserRepository extends DbRepository implements UserRepository
+class DbUserRepository extends DbRepository implements UserRepositoryInterface
 {
     /**
      * @var User

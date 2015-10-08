@@ -44,4 +44,14 @@ class User extends Model implements AuthenticatableContract,
         $this->attributes['password'] = Hash::make($password);
     }
 
+    /**
+     * User has many dates relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function dates()
+    {
+        return $this->hasMany('App\Date');
+    }
+
 }

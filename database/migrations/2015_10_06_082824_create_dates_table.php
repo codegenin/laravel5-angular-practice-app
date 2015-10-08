@@ -21,7 +21,8 @@ class CreateDatesTable extends Migration
             $table->integer('location_lat');
             $table->integer('location_long');
             $table->enum('state', ['active', 'pending', 'completed']);
-            $table->integer('owner_id');
+            $table->integer('owner_id')->unsigned()->lenght(10);
+            $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
