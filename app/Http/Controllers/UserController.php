@@ -9,6 +9,7 @@ use App\Transformers\UserTransformer;
 use App\User;
 use Cyvelnet\Laravel5Fractal\Facades\Fractal;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends ApiController
@@ -84,7 +85,7 @@ class UserController extends ApiController
      */
     public function editUser()
     {
-        $user = $this->getAuthenticatedUser();
+        $user = Auth::user();
 
         return Fractal::item($user, new UserTransformer())
                       ->responseJson(Response::HTTP_ACCEPTED);
