@@ -2,7 +2,7 @@
 
 angular.module('cortejando')
 
-    .config( function( $stateProvider, $urlRouterProvider, $locationProvider ,
+    .config( function( $stateProvider, $urlRouterProvider, $locationProvider,
         $httpProvider) {
 
         $urlRouterProvider.otherwise('/');
@@ -52,6 +52,11 @@ angular.module('cortejando')
                 url: '/dates',
                 templateUrl: templatePath + 'pages/dates/listDates.html',
                 controller: 'DatesAllController'
+            })
+            .state('dates/view', {
+                url: '/dates/:id',
+                templateUrl: templatePath + 'pages/dates/viewDate.html',
+                controller: 'DateViewController'
             })
 
         $locationProvider.html5Mode(true);
