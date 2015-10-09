@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.8.5\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es_ES\n"
+
+#: partials\nav.html:15
+msgid "About"
+msgstr "Acerca de"
+
+#: pages\about.html:1
+msgid "About Page"
+msgstr "Acerca de la Página"
+
+#: pages\user\register.html:51
+msgid "Date Of Birth - yyyy-mm-dd"
+msgstr "Fecha de nacimiento - aaaa-mm-dd"
+
+#: pages\user\register.html:72
+msgid "Female"
+msgstr "Niña"
+
+#: partials\nav.html:14
+msgid "Home"
+msgstr "Página de inicio"
+
+#: pages\home.html:1
+msgid "Home Page"
+msgstr "Página de Inicio"
+
+#: pages\user\register.html:64
+msgid "Male"
+msgstr "Niño"
+
+#: pages\user\register.html:8
+msgid "Maximum 500 characters is allowed."
+msgstr "Se permite máximo 500 caracteres."
+
+#: pages\user\register.html:57
+msgid "Phone Number"
+msgstr "Teléfono"
+
+#: pages\user\register.html:12
+msgid "Please enter your date of birth."
+msgstr "Por favor, entre su fecha de nacimiento"
+
+#: pages\user\register.html:16
+msgid "Please phone number in +###-####-### format."
+msgstr "Teléfono"
+
+#: pages\user\register.html:20
+msgid "Please select your gender."
+msgstr "Por favor, entre su fecha de nacimiento"
+
+#: pages\user\register.html:79 partials\nav.html:16
+msgid "Register"
+msgstr "Registrar"
+
+#: pages\user\register.html:41
+msgid "Your description"
+msgstr "Por favor, entre su fecha de nacimiento"
+
+#: pages\user\register.html:32
+msgid "Your name"
+msgstr "Por favor, entre su fecha de nacimiento"
+
+#: pages\user\register.html:4
+msgid "Your name should be between 6 to 50 characters."
+msgstr "Fecha de nacimiento should be between 6 to 50 characters."

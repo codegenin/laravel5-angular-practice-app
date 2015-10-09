@@ -1,0 +1,85 @@
+<form id="userForm" name="userForm" ng-submit="update(userData)" novalidate>
+
+    <!-- Error Blocks -->
+    <p class="help-block"
+       ng-show="userForm.$dirty && userForm.name.$invalid" translate>
+        Your name should be between 6 to 50 characters.
+    </p>
+    <p class="help-block"
+       ng-show="userForm.$dirty && userForm.description.$invalid" translate>
+        Maximum 500 characters is allowed.
+    </p>
+    <p class="help-block"
+       ng-show="userForm.$dirty && userForm.dob.$invalid" translate>
+        Please enter your date of birth.
+    </p>
+    <p class="help-block"
+       ng-show="userForm.$dirty && userForm.phone.$invalid" translate>
+        Please phone number in +###-####-### format.
+    </p>
+    <p class="help-block"
+       ng-show="userForm.$dirty && userForm.gender.$invalid" translate>
+        Please select your gender.
+    </p>
+
+    <div class="list">
+        <input type="hidden" ng-model="userData.id" />
+        <!-- Name -->
+        <label for="user_name" class="item item-input"
+               ng-class="{'has-error': userForm.name.$touched && userForm.name.$invalid}">
+            <input name="name" id="user_name" type="text"
+                   ng-model="userData.name"
+                   ng-minlength="6" ng-maxlength="50"
+                   placeholder="{{'Your name' | translate}}" required>
+        </label>
+
+        <!-- Description -->
+        <label for="user_description" class="item item-input"
+               ng-class="{'has-error': userForm.description.$touched && userForm.description.$invalid}">
+            <textarea name="description" id="user_description"
+                      ng-model="userData.description"
+                      rows="10" ng-maxlength="500"
+                      placeholder="{{'Your description'|translate}}"
+                      ng-maxlength="500" required></textarea>
+        </label>
+
+        <!-- Date Of Birht -->
+        <label for="user_dob" class="item item-input"
+               ng-class="{'has-error': userForm.dob.$touched && userForm.dob.$invalid}">
+            <input type="text" id="user_dob" ng-model="userData.dob" name="dob"
+                   min="1960-01-01" max="{{date | date:'yyyy-MM-dd'}}"
+                   ng-pattern="/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/"
+                   placeholder="{{'Date Of Birth - yyyy-mm-dd'|translate}}" required>
+        </label>
+
+        <!-- Phone Number -->
+        <label for="user_phone" class="item item-input">
+            <input type="text" id="user_phone" ng-model="userData.phone" name="phone"
+                   ng-pattern="/^[0-9 + -]+$/" placeholder="{{'Phone Number'|translate}}">
+        </label>
+
+        <!-- Gender -->
+        <label class="item item-radio">
+            <input type="radio" ng-model="userData.gender" name="gender"
+                   value="male" ng-required="!userData.gender">
+            <div class="item-content" translate>
+                Male
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+        </label>
+        <label class="item item-radio">
+            <input type="radio" ng-model="userData.gender" name="gender"
+                   value="female" ng-required="!userData.gender">
+            <div class="item-content" translate>
+                Female
+            </div>
+            <i class="radio-icon ion-checkmark"></i>
+        </label>
+
+        <!-- Submit Button-->
+        <button class="button button-block button-positive"
+                type="submit" ng-disabled="userForm.$invalid" translate>
+            Update Profile
+        </button>
+    </div>
+</form>

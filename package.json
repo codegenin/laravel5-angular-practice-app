@@ -1,0 +1,26 @@
+{
+  "name": "cortejando-front",
+  "version": "1.0.0",
+  "description": "Cortejando front side",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jlpuro@bitbucket.org/ortho/cortejando-front.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/ortho/cortejando-front#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
+  "dependencies": {
+    "bootstrap-sass": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-angular-gettext": "^2.1.0",
+    "laravel-elixir": "^3.0.0",
+    "satellizer": "^0.12.5"
+  }
+}

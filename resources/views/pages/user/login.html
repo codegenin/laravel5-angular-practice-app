@@ -1,0 +1,18 @@
+<form id="loginForm" name="loginForm" ng-submit="login(credentials)" novalidate>
+
+    <!-- Username -->
+    <label for="email" class="item item-input">
+        <input type="text" id="email" name="email"
+                ng-model="credentials.email" placeholder="Email">
+    </label>
+
+    <!-- Password -->
+    <label for="password" class="item item-input">
+        <input type="password" id="password" name="password"
+                ng-model="credentials.password" placeholder="Password">
+    </label>
+
+    <button type="submit" class="button button-block button-positive" >
+        Login
+    </button>
+</form>

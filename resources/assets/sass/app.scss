@@ -1,0 +1,26 @@
+/* main.scss */
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,700,300);
+$font-family-base: 'Raleway', sans-serif;
+// Import bootstrap, theme and fontawesome
+@import "bootstrap";
+@import "bootstrap/theme";
+@import "font-awesome";
+@import "ionic";
+@import "loading-bar";
+
+body {
+  padding-top: 0px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+// Angular validation classes
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+  border: 1px solid red;
+}
+
+textarea.ng-touched.ng-valid {
+  border: 1px solid #3c763d;
+}

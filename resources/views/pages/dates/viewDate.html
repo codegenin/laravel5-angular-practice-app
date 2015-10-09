@@ -1,0 +1,41 @@
+<h1>View Date</h1>
+<form>
+
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">Id:</span>
+            <input name="id" type="text" value="" ng-model="dateData.id" disabled>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Description:</span>
+            <textarea name="description" id="" cols="30" rows="10"
+                      data-ng-model="dateData.description" disabled>
+            </textarea>
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Location:</span>
+            <input name="location_map" type="text" value="1"
+                   ng-model="dateData.location_name" disabled>
+        </label>
+
+        <label class="item item-input item-select">
+            <div class="input-label">
+                State:
+            </div>
+            <select name="state" ng-model="dateData.state" disabled>
+                <option></option>
+                <option ng-selected="dateData.state == 'active'">Active</option>
+                <option ng-selected="dateData.state == 'inactive'">Inactive</option>
+                <option ng-selected="dateData.state == 'completed'">Completed</option>
+            </select>
+        </label>
+
+        <label class="item item-input">
+            <span class="input-label">Time:</span>
+            <input name="time" type="text" value="1"
+                   ng-model="dateData.time_timestamp" disabled>
+        </label>
+    </div>
+
+</form>
+
