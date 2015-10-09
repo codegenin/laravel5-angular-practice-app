@@ -51,7 +51,7 @@ class User extends Model implements AuthenticatableContract,
      */
     public function dates()
     {
-        return $this->hasMany('App\Date');
+        return $this->hasMany('App\Date', 'owner_id');
     }
 
 }
