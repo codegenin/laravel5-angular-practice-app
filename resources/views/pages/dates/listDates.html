@@ -1,0 +1,19 @@
+<h1 translate>List Of Dates</h1>
+<table class="table table-striped">
+    <tr>
+        <td><strong>ID</strong></td>
+        <td><strong>Description</strong></td>
+        <td><strong>Location</strong></td>
+        <td><strong>State</strong></td>
+        <td><strong>Time and Date</strong></td>
+        <td><strong>Action</strong></td>
+    </tr>
+    <tr ng-repeat="date in dates">
+        <td>{{ date.id }}</td>
+        <td>{{ date.description }}</td>
+        <td>{{ date.location_name }}</td>
+        <td>{{ date.state }}</td>
+        <td>{{ date.time_timestamp }}</td>
+        <td><a href="/dates/{{ date.id }}">View</a></td>
+    </tr>
+</table>

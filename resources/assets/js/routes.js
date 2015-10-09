@@ -45,6 +45,15 @@ angular.module('cortejando')
                 controller: 'ProfileController'
             })
 
+        /**
+         * Dates Routes
+         */
+            .state('dates', {
+                url: '/dates',
+                templateUrl: templatePath + 'pages/dates/listDates.html',
+                controller: 'DatesAllController'
+            })
+
         $locationProvider.html5Mode(true);
 
     });
